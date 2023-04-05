@@ -38,8 +38,7 @@ public class Jugador {
         sb.append(" - ");
         for (int i = 0; i < mano.size(); i++) {
             Carta c = mano.get(i);
-            sb.append(c.getNumero());            
-            sb.append(c.getPalo().toString());
+            sb.append(c);
             if(i < mano.size() - 1) {
                 sb.append(" | ");
             }
