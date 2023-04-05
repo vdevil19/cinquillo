@@ -1,6 +1,6 @@
 package es.uvigo.esei.aed1.core;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
 
 /**
  * Representa a un jugador, identificado por el nombre y sus cartas de la mano
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Jugador {
     private int numero;
     private String nombre;
-    private ArrayList<Carta> mano;
+    private ArrayDeque<Carta> mano;
 
     public int getNumero() {
         return numero;
@@ -25,7 +25,7 @@ public class Jugador {
     public Jugador(int numero, String nombre) {
         this.numero = numero;
         this.nombre = nombre;
-        mano = new ArrayList<>();
+        mano = new ArrayDeque<>();
     }
     
     public void cogerCarta(Carta c) {
@@ -34,12 +34,13 @@ public class Jugador {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Jugador " + numero + ": " + nombre);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Jugador ")
+                .append(numero).append(": ").append(nombre);
         sb.append(" - ");
-        for (int i = 0; i < mano.size(); i++) {
-            Carta c = mano.get(i);
+        for (Carta c : mano) {
             sb.append(c);
-            if(i < mano.size() - 1) {
+            if(!c.equals(mano.getLast())) {
                 sb.append(" | ");
             }
         }

@@ -57,8 +57,15 @@ public class IU {
 
     public Collection<String> pedirDatosJugadores(){
         ArrayList<String> datosJugadores = new ArrayList<String>();
+        int numJugadores = 0;
         
-        int numJugadores = leeNum("Numero de jugadores: ");
+        do {
+            numJugadores = leeNum("Numero de jugadores [3 o 4]: ");
+            if (numJugadores < 3 || numJugadores > 4) {
+                System.err.println
+                    ("Número incorrecto. Solo se admiten 3 o 4 jugadores!");
+            }
+        } while (numJugadores < 3 || numJugadores > 4);
         
         for (int i = 0; i < numJugadores; i++) {
             datosJugadores.add(
