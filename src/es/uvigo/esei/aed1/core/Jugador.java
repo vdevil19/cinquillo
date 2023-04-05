@@ -10,20 +10,14 @@ import java.util.ArrayDeque;
  * @author VíctorManuel
  */
 public class Jugador {
-    private int numero;
     private String nombre;
     private ArrayDeque<Carta> mano;
-
-    public int getNumero() {
-        return numero;
-    }
     
     public String getNombre() {
         return nombre;
     }
 
-    public Jugador(int numero, String nombre) {
-        this.numero = numero;
+    public Jugador(String nombre) {
         this.nombre = nombre;
         mano = new ArrayDeque<>();
     }
@@ -32,11 +26,9 @@ public class Jugador {
         mano.add(c);
     }
 
-    @Override
-    public String toString() {
+    public String toString(int numero) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Jugador ")
-                .append(numero).append(": ").append(nombre);
+        sb.append("Jugador ").append(numero).append(": ").append(nombre);
         sb.append(" - ");
         for (Carta c : mano) {
             sb.append(c);

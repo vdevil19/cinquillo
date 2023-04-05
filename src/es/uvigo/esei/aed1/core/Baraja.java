@@ -27,10 +27,10 @@ public class Baraja {
         cartas.clear();
         
         // Ordenamos el mazo con todas las cartas
-        ArrayList<Carta> mazo = new ArrayList<Carta>();
-        for (int p = 0; p < 4; p++) {
-            for (int n = 1; n <= 12; n++) {
-                Carta c = new Carta(Carta.Palo.values()[p], n);
+        ArrayList<Carta> mazo = new ArrayList<>(4 * 12);
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 12; j++) {
+                Carta c = new Carta(Carta.Palo.values()[i], j + 1);
                 mazo.add(c);
             }
         }
@@ -38,7 +38,7 @@ public class Baraja {
         // Barajamos
         Random r = new Random();
         while(!mazo.isEmpty()) {
-            int pos = r.nextInt(0, mazo.size());
+            int pos = r.nextInt(mazo.size());
             Carta c = mazo.remove(pos);
             cartas.push(c);
         }

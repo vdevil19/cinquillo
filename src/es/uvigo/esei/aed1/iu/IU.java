@@ -6,9 +6,7 @@
 package es.uvigo.esei.aed1.iu;
 
 import es.uvigo.esei.aed1.core.Jugador;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class IU {
@@ -25,16 +23,28 @@ public class IU {
      * @return El num., como entero
      */
     public int leeNum(String msg) {
-        do {
-                System.out.print(msg);
-
-                try {
-                        return teclado.nextInt();
-                } catch (InputMismatchException exc) {
-                        teclado.next();
-                        System.out.println("Entrada no válida. Debe ser un entero.");
-                }
-        } while (true);
+        while (true) {
+            String str = leeString(msg);
+            
+            try {
+                return Integer.parseInt(str);
+            } catch (NumberFormatException _e) {
+                System.out.println("Entrada no válida. Debe ser un entero.");
+            }
+        }
+    }
+    
+    /// Lee un número en el intervalo [min, max_ex)
+    /// Importante, el minimo es inclusivo, el máximo exclusivo
+    public int leerIntRango(String msg, int min, int max_ex) {
+        int x = min - 1;
+        while (x < min || x >= max_ex) {
+            x = leeNum(msg);
+            if (x < min || x >= max_ex) { // Tener que comprobar dos veces la condición es malo (se podría usar un break pero bueno)
+                System.err.println(String.format("Número incorrecto. El valor debe estar entre %i y %i.", min, max_ex));
+            }
+        }
+        return x;
     }
 
     public String leeString(String msg) {
@@ -55,33 +65,24 @@ public class IU {
         System.out.printf(msg, args);
     }
 
-    public Collection<String> pedirDatosJugadores(){
-        ArrayList<String> datosJugadores = new ArrayList<String>();
-        int numJugadores = 0;
+    public String[] pedirDatosJugadores(){
+        int numJugadores = leerIntRango("Introduce el número de jugadores (3 / 4)", 3, 5);
         
-        do {
-            numJugadores = leeNum("Numero de jugadores [3 o 4]: ");
-            if (numJugadores < 3 || numJugadores > 4) {
-                System.err.println
-                    ("Número incorrecto. Solo se admiten 3 o 4 jugadores!");
-            }
-        } while (numJugadores < 3 || numJugadores > 4);
-        
+        String[] nombres = new String[numJugadores];
         for (int i = 0; i < numJugadores; i++) {
-            datosJugadores.add(
-                    leeString("Nombre del jugador " + (i + 1) + ": "));
+            nombres[i] = leeString("Nombre del jugador " + (i + 1) + ": ");
         }
         
-        return datosJugadores;
+        return nombres;
     }
 
     public void mostrarJugador(Jugador jugador){
         System.out.println(jugador);
     }
 
-    public void mostrarJugadores(Collection<Jugador> jugadores){
-        for (Jugador j : jugadores) {
-            System.out.println(j);
+    public void mostrarJugadores(Jugador[] jugadores){
+        for (int i = 0; i < jugadores.length; i++) {
+            System.out.println(jugadores[i].toString(i + 1));
         }
     }
 }

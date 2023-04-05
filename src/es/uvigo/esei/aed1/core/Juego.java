@@ -14,24 +14,23 @@ public class Juego {
     private final IU iu;
     private Baraja baraja;
     private int numeroJugadores;
-    private ArrayList<Jugador> jugadores;
+    private Jugador[] jugadores;
     
     private int jugadorActual;
 
     public Juego(IU iu) {
         this.iu = iu;
-
     }
 
     public void jugar() {
         // Leemos datos de jugadores y los creamos
-        Collection<String> datosJugadores = iu.pedirDatosJugadores();
-        jugadores = new ArrayList<>();
-        int numero = 1;
-        for (String dj : datosJugadores) {
-            jugadores.add(new Jugador(numero++, dj));
+        String[] datosJugadores = iu.pedirDatosJugadores();
+        numeroJugadores = jugadores.length;
+        
+        jugadores = new Jugador[numeroJugadores];
+        for (int i = 0; i < numeroJugadores; i++) {
+            jugadores[i] = new Jugador(datosJugadores[i]);
         }
-        numeroJugadores = jugadores.size();
         
         // Creamos y barajamos las cartas
         baraja = new Baraja();
@@ -39,8 +38,7 @@ public class Juego {
         // Repartimos las cartas
         jugadorActual = 0;
         while(!baraja.estaVacia()) {
-            jugadores.get(jugadorActual)
-                    .cogerCarta(baraja.siguienteCarta());
+            jugadores[jugadorActual].cogerCarta(baraja.siguienteCarta());
             jugadorActual = (jugadorActual + 1) % numeroJugadores;
         }
         
@@ -51,7 +49,6 @@ public class Juego {
         // Mostramos jugador actual
         Random rand = new Random();
         jugadorActual = rand.nextInt(numeroJugadores);
-        iu.mostrarMensaje("\nTurno del jugador: " 
-                + jugadores.get(jugadorActual).getNombre());
+        iu.mostrarMensaje("\nTurno del jugador: " + jugadores[jugadorActual].getNombre());
     }
 }
