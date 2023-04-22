@@ -28,8 +28,6 @@ public class Jugador {
 
     public String toString(int numero) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Jugador ").append(numero).append(": ").append(nombre);
-        sb.append(" - ");
         for (Carta c : mano) {
             sb.append(c);
             if(!c.equals(mano.getLast())) {

@@ -66,7 +66,7 @@ public class IU {
     }
 
     public String[] pedirDatosJugadores(){
-        int numJugadores = leerIntRango("Introduce el número de jugadores (3 / 4)", 3, 5);
+        int numJugadores = leerIntRango("Introduce el número de jugadores (3 / 4): ", 3, 5);
         
         String[] nombres = new String[numJugadores];
         for (int i = 0; i < numJugadores; i++) {
@@ -76,8 +76,8 @@ public class IU {
         return nombres;
     }
 
-    public void mostrarJugador(Jugador jugador){
-        System.out.println(jugador);
+    public void mostrarJugador(Jugador jugador, int turno){
+        System.out.println(jugador.toString(turno));
     }
 
     public void mostrarJugadores(Jugador[] jugadores){

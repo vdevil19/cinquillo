@@ -9,7 +9,13 @@ public class Carta {
         OROS,
         COPAS,
         ESPADAS,
-        BASTOS
+        BASTOS;
+        
+        @Override
+        public String toString() {
+            return this.name().charAt(0) +
+                this.name().substring(1).toLowerCase();
+        }
     }
 
     public Palo getPalo() {

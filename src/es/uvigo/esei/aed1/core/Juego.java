@@ -25,7 +25,7 @@ public class Juego {
     public void jugar() {
         // Leemos datos de jugadores y los creamos
         String[] datosJugadores = iu.pedirDatosJugadores();
-        numeroJugadores = jugadores.length;
+        numeroJugadores = datosJugadores.length;
         
         jugadores = new Jugador[numeroJugadores];
         for (int i = 0; i < numeroJugadores; i++) {
@@ -42,13 +42,29 @@ public class Juego {
             jugadorActual = (jugadorActual + 1) % numeroJugadores;
         }
         
-        // Mostramos jugadores y sus manos
+        infoTurno();
+    }
+    
+    /** 
+     * Muestra las cartas en la mesa y la mano del jugador, para el turno actual
+     */
+    private void infoTurno() {
+        // Mostramos cartas en la mesa
         iu.mostrarMensaje("\n");
-        iu.mostrarJugadores(jugadores);
-        
+        iu.mostrarMensaje("-".repeat(80));        
+        iu.mostrarMensaje("| Oros:    ");
+        iu.mostrarMensaje("|");
+        iu.mostrarMensaje("| Copas:   ");
+        iu.mostrarMensaje("|");
+        iu.mostrarMensaje("| Espadas: ");
+        iu.mostrarMensaje("|");
+        iu.mostrarMensaje("| Bastos:  ");
+        iu.mostrarMensaje("-".repeat(80));
+
         // Mostramos jugador actual
         Random rand = new Random();
         jugadorActual = rand.nextInt(numeroJugadores);
         iu.mostrarMensaje("\nTurno del jugador: " + jugadores[jugadorActual].getNombre());
+        iu.mostrarJugador(jugadores[jugadorActual], jugadorActual + 1);
     }
 }
