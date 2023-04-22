@@ -13,6 +13,7 @@ public class Juego {
 
     private final IU iu;
     private Baraja baraja;
+    private Mesa mesa;
     private int numeroJugadores;
     private Jugador[] jugadores;
     
@@ -32,6 +33,9 @@ public class Juego {
             jugadores[i] = new Jugador(datosJugadores[i]);
         }
         
+        // Creamos mesa
+        mesa = new Mesa();
+        
         // Creamos y barajamos las cartas
         baraja = new Baraja();
         
@@ -50,16 +54,7 @@ public class Juego {
      */
     private void infoTurno() {
         // Mostramos cartas en la mesa
-        iu.mostrarMensaje("\n");
-        iu.mostrarMensaje("-".repeat(80));        
-        iu.mostrarMensaje("| Oros:    ");
-        iu.mostrarMensaje("|");
-        iu.mostrarMensaje("| Copas:   ");
-        iu.mostrarMensaje("|");
-        iu.mostrarMensaje("| Espadas: ");
-        iu.mostrarMensaje("|");
-        iu.mostrarMensaje("| Bastos:  ");
-        iu.mostrarMensaje("-".repeat(80));
+        iu.mostrarMensaje("\n" + mesa.toString());
 
         // Mostramos jugador actual
         Random rand = new Random();
