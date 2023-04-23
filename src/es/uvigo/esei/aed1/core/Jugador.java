@@ -30,26 +30,32 @@ public class Jugador {
         mano.add(c);
     }
 
-    public String toString(int numero) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < mano.size() - 1; i++) {
-            sb.append(mano.get(i));
-            sb.append(" | ");
-        }
-        if(!mano.isEmpty()) {
-            sb.append(mano.get(mano.size() - 1));
-        }
-        
-        return sb.toString();
-    }
-    
     //comprueba de que el jugador pueda jugar alguna de sus cartas
-    public boolean puedeJugar (Jugador jugador,Mesa mesa){
-        for (Carta carta : jugador.getMano()) {
+    public boolean puedeJugar (Mesa mesa){
+        for (Carta carta : mano) {
             if(mesa.esColocable(carta)){
                 return true;
             }
         }
         return false;
+    }
+    
+    /**
+     * Comprueba si un jugador ha jugado todas sus cartas
+     * 
+     * @return true si ha jugado todas las cartas
+     */
+    public boolean cartasColocadas() {
+        return mano.isEmpty();
+    }
+    
+    public String toString(int numero) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < mano.size(); i++) {
+            sb.append("[" + (i + 1) + "]");
+            sb.append(mano.get(i) + " ");
+        }
+        
+        return sb.toString();
     }
 }
