@@ -108,8 +108,6 @@ public class Juego {
         iu.mostrarMensaje("\n" + mesa.toString());
 
         // Mostramos jugador actual
-        Random rand = new Random();
-        jugadorActual = rand.nextInt(numeroJugadores);
         iu.mostrarMensaje("\nTurno del jugador: " + jugadores[jugadorActual].getNombre());
         iu.mostrarJugador(jugadores[jugadorActual], jugadorActual + 1);
     }
@@ -118,6 +116,8 @@ public class Juego {
      * Muestra el ganador de la partida
      */
     private void finPartida() {
-        // Mostramos el nombre del ganador
+        // Mostramos el nombre del ganador.
+        iu.mostrarMensaje("\n\n");
+        iu.mostrarMensaje(jugadores[ganador].getNombre() + " ha ganado la partida!\n");
     }
 }

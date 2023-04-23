@@ -41,7 +41,7 @@ public class IU {
         while (x < min || x >= max_ex) {
             x = leeNum(msg);
             if (x < min || x >= max_ex) { // Tener que comprobar dos veces la condición es malo (se podría usar un break pero bueno)
-                System.err.println(String.format("Número incorrecto. El valor debe estar entre %i y %i.", min, max_ex));
+                System.err.println(String.format("Número incorrecto. El valor debe estar entre %d y %d.", min, max_ex));
             }
         }
         return x;
