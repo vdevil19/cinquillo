@@ -42,4 +42,14 @@ public class Jugador {
         
         return sb.toString();
     }
+    
+    //comprueba de que el jugador pueda jugar alguna de sus cartas
+    public boolean puedeJugar (Jugador jugador,Mesa mesa){
+        for (Carta carta : jugador.getMano()) {
+            if(mesa.esColocable(carta)){
+                return true;
+            }
+        }
+        return false;
+    }
 }
