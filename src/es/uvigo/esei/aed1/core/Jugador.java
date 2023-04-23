@@ -29,6 +29,17 @@ public class Jugador {
     public void cogerCarta(Carta c) {
         mano.add(c);
     }
+    
+    public Carta getCarta(int num) {
+        return mano.get(num);
+    }
+    
+    public Carta jugarCarta(int num) {
+        Carta c = getCarta(num);
+        mano.remove(c);
+        
+        return c;
+    }
 
     //comprueba de que el jugador pueda jugar alguna de sus cartas
     public boolean puedeJugar (Mesa mesa){

@@ -6,7 +6,6 @@
 package es.uvigo.esei.aed1.iu;
 
 import es.uvigo.esei.aed1.core.Jugador;
-import java.util.Collection;
 import java.util.Scanner;
 
 public class IU {
@@ -41,7 +40,7 @@ public class IU {
         while (x < min || x >= max_ex) {
             x = leeNum(msg);
             if (x < min || x >= max_ex) { // Tener que comprobar dos veces la condición es malo (se podría usar un break pero bueno)
-                System.err.println(String.format("Número incorrecto. El valor debe estar entre %d y %d.", min, max_ex));
+                System.err.println(String.format("Número incorrecto. El valor debe estar entre %d y %d.", min, max_ex - 1));
             }
         }
         return x;
@@ -84,5 +83,17 @@ public class IU {
         for (int i = 0; i < jugadores.length; i++) {
             System.out.println(jugadores[i].toString(i + 1));
         }
+    }
+    
+    public void sinCartasJugables() {
+        mostrarMensaje("No tienes ninguna carta para jugar.");
+        leeString("Pulsa intro para terminar el turno.");
+    }
+    
+    public int pedirCarta(Jugador j){
+        int numCarta = leerIntRango("Introduce el número de carta a jugar: ", 
+                1, j.getMano().size() + 1);
+        
+        return numCarta;
     }
 }

@@ -66,7 +66,7 @@ public class Mesa {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         
-        sb.append("-".repeat(80));        
+        sb.append("-".repeat(70));        
         sb.append("\n| Oros:    ");
         for (Carta c : mesa[0]) {
             sb.append(c.getNumero());
@@ -99,7 +99,7 @@ public class Mesa {
             }
         }
         sb.append("\n");
-        sb.append("-".repeat(80));   
+        sb.append("-".repeat(70));   
         
         return sb.toString();
     }

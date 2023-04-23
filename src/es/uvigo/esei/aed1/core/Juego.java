@@ -5,9 +5,6 @@
 package es.uvigo.esei.aed1.core;
 
 import es.uvigo.esei.aed1.iu.IU;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Random;
 
 public class Juego {
 
@@ -89,14 +86,24 @@ public class Juego {
     private void turnoJugador() {
         // el jugador no tiene cartas para jugar
         if(!jugadores[jugadorActual].puedeJugar(mesa)) {
-            // Si el/la jugador/a activo/a no puede colocar ninguna carta en la mesa, se informa
-            // y pasa el turno al siguiente jugador/a.
+            // no puede colocar ninguna carta en la mesa, se informa y pasa el turno 
+            iu.sinCartasJugables();
         }
-        else {
-            // Si el/la jugador/a activo/a puede colocar alguna carta en la mesa, se le debe
-            // preguntar qué carta quiere colocar. Si es posible, se coloca en la mesa. Si no es
-            // posible, se le informa y se le pide que escoja otra carta. Una vez colocada pasa el
-            // turno al siguiente jugador/a.
+        else { 
+            int carta = -1;
+            // Preguntar qué carta colocar. Si es posible, se coloca en la mesa.
+            do {
+                carta = iu.pedirCarta(jugadores[jugadorActual]);
+                
+                if(mesa.esColocable(jugadores[jugadorActual].getCarta(carta - 1))) {
+                    mesa.colocarCarta(jugadores[jugadorActual].jugarCarta(carta - 1));
+                }
+                // Si no es posible, se le informa y se le pide que escoja otra carta. 
+                else {
+                    iu.mostrarMensaje("Lo siento, no se puede jugar esa carta.");
+                    carta = -1;
+                }   
+            } while(carta == -1);
         }
     }
     
