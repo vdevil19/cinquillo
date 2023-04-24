@@ -48,6 +48,7 @@ public class Juego {
         
         // Creamos y barajamos las cartas
         baraja = new Baraja();
+        baraja.barajar();
         
         // Repartimos las cartas
         jugadorActual = 0;
@@ -101,6 +102,7 @@ public class Juego {
                 // Si no es posible, se le informa y se le pide que escoja otra carta. 
                 else {
                     iu.mostrarMensaje("Lo siento, no se puede jugar esa carta.");
+                    iu.mostrarJugador(jugadores[jugadorActual], jugadorActual + 1);
                     carta = -1;
                 }   
             } while(carta == -1);

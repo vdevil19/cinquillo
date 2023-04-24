@@ -16,30 +16,37 @@ import java.util.Stack;
  * @author Grupo XXXXX
  */
 public class Baraja {
+    private final int PALOS = 4;
+    private final int CARTAS = 12;
+    
     private Stack<Carta> cartas;
 
     public Baraja() {
         cartas = new Stack<>();
-        barajar();
+        for (int i = 0; i < PALOS; i++) {
+            for (int j = 0; j < CARTAS; j++) {
+                Carta c = new Carta(Carta.Palo.values()[i], j + 1);
+                cartas.add(c);
+            }
+        }
     }
     
-    public void barajar() {
-        cartas.clear();
-        
-        // Ordenamos el mazo con todas las cartas
-        ArrayList<Carta> mazo = new ArrayList<>(4 * 12);
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 12; j++) {
+    public void barajar() {        
+        // Creamos un mazo temporal con todas las cartas
+        ArrayList<Carta> temp = new ArrayList<>(CARTAS * PALOS);
+        for (int i = 0; i < PALOS; i++) {
+            for (int j = 0; j < CARTAS; j++) {
                 Carta c = new Carta(Carta.Palo.values()[i], j + 1);
-                mazo.add(c);
+                temp.add(c);
             }
         }
         
+        cartas.clear();
         // Barajamos
         Random r = new Random();
-        while(!mazo.isEmpty()) {
-            int pos = r.nextInt(mazo.size());
-            Carta c = mazo.remove(pos);
+        while(!temp.isEmpty()) {
+            int pos = r.nextInt(temp.size());
+            Carta c = temp.remove(pos);
             cartas.push(c);
         }
     }
