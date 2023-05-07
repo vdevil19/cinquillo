@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
 
-// TODO javadocs clase y métodos
 /**
  * Representa la baraja española pero con 8 y 9, en total 48 cartas, 4 palos,
  * valores de las cartas de 1 a 12. 
@@ -12,7 +11,7 @@ import java.util.Stack;
  * Funcionalidad: barajar las cartas, devolver la carta situada encima del
  * montón de cartas
  *
- * @author Grupo XXXXX
+ * @author Grupo 2Espadas
  */
 public class Baraja {
 
@@ -34,7 +33,9 @@ public class Baraja {
         }
     }
 
-    //    Barajar cartas
+    /**
+     * Baraja las cartas
+     */
     public void barajarCartas() {
         // Barajamos
         ArrayList<Carta> mazo = new ArrayList<>(NUMCARTAS);
@@ -49,10 +50,20 @@ public class Baraja {
         }
     }
 
+    /**
+     * Comprueba si la baraja tiene o no cartas
+     * 
+     * @return true si no quedan más cartas en la baraja
+     */
     public boolean estaVacia() {
         return cartas.empty();
     }
 
+    /**
+     * Devuelve la siguiente carta de la baraja
+     * 
+     * @return Siguiente carta
+     */
     public Carta siguienteCarta() {
         return cartas.pop();
     }

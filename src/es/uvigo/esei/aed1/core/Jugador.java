@@ -2,8 +2,6 @@ package es.uvigo.esei.aed1.core;
 
 import java.util.ArrayList;
 
-// TODO javadocs clase y métodos
-// TODO añadir atributo puntuacion
 /**
  * Representa a un jugador, identificado por el nombre y sus cartas de la mano
  * Estructura mano: se utilizará un TAD adecuado Funcionalidad: Añadir carta a
@@ -36,14 +34,31 @@ public class Jugador {
         return mano;
     }
 
+    /**
+     * Añade una carta a la mano del jugador
+     * 
+     * @param c Carta que se añadirá
+     */
     public void cogerCarta(Carta c) {
         mano.add(c);
     }
 
+    /**
+     * Se quita una carta de la mano del jugador
+     * 
+     * @param num Número de orden de la carta
+     * @return Carta que saldrá de la mano del jugador
+     */
     public Carta getCarta(int num) {
         return mano.get(num);
     }
 
+    /**
+     * Juega una carta de la mano del jugador
+     * 
+     * @param num Número de orden de la carta
+     * @return Carta que se jugará
+     */
     public Carta jugarCarta(int num) {
         Carta c = getCarta(num);
         mano.remove(c);
@@ -51,7 +66,12 @@ public class Jugador {
         return c;
     }
 
-    //comprueba de que el jugador pueda jugar alguna de sus cartas
+    /**
+     * Comprueba si el jugador tiene alguna carta que pueda ser jugada
+     * 
+     * @param mesa Mesa del juego actual
+     * @return true si puede jugar alguna carta 
+     */
     public boolean puedeJugar(Mesa mesa) {
         for (Carta carta : mano) {
             if (mesa.esColocable(carta)) {

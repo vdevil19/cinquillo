@@ -1,13 +1,9 @@
-/*
- * Representa una carta, formada por un número y su palo correspondiente
- */
 package es.uvigo.esei.aed1.core;
 
-// TODO javadocs clase y métodos
 /**
- * Representa una carta de la baraja
+ * Representa una carta, formada por un número y su palo correspondiente
  * 
- * @author VíctorManuel
+ * @author Grupo 2Espadas
  */
 public class Carta {
      // Enumerado con los posibles valores de los palos

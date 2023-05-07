@@ -2,17 +2,16 @@ package es.uvigo.esei.aed1.core;
 
 import es.uvigo.esei.aed1.iu.IU;
 
-// TODO javadocs clase y métodos
 /**
  * Representa el juego del Cinquillo-Oro, con sus reglas (definidas en el documento Primera entrega).
  * Se recomienda una implementación modular.
  * 
- * @author Grupo XXXX
+ * @author Grupo 2Espadas
  */
 public class Juego {
+    // constantes con la puntuación del juego
     private static final int PUNTOS_PARTIDA = 4;
     private static final int PUNTOS_AS = 2;
-
 
     // Atributos
     private final IU iu;
@@ -28,9 +27,12 @@ public class Juego {
     public Juego(IU iu) {
         this.iu = iu;
         partidas = 0;
-        asOros = true;
+        asOros = false;
     }
     
+    /**
+     * Comienza el juego
+     */
     public void comenzarJuego() {
         // Leemos datos de jugadores y los creamos
         iniciarJugadores();
@@ -39,6 +41,9 @@ public class Juego {
         nuevaPartida();
     }
 
+    /**
+     * Crea los jugadores a partir de los datos introducidos por el usuario
+     */
     private void iniciarJugadores() {
         String[] datosJugadores = iu.pedirDatosJugadores();
         
@@ -51,6 +56,9 @@ public class Juego {
         jugadorActual = 0;
     }
     
+    /**
+     * Comienza una nueva partida
+     */
     public void nuevaPartida() {
         partidas++;
         
@@ -61,6 +69,9 @@ public class Juego {
         jugar();
     }
     
+    /**
+     * Vacía la mesa y reparte las cartas de la baraja entre los jugadores
+     */
     private void iniciarMesaYManos() {
         // Creamos mesa
         mesa = new Mesa();
@@ -76,6 +87,11 @@ public class Juego {
         }
     }
     
+    /**
+     * Bucle principal de juego, jugador por jugador muestra la información de 
+     * la partida, permite que el jugador juegue una carta si tiene la opción, 
+     * y comprueba si la partida ha terminado
+     */
     private void jugar() {
         // iniciamos la partida con el jugador actual
         boolean partidaTerminada = false;
@@ -101,6 +117,11 @@ public class Juego {
         finPartida();
     }
     
+    /**
+     * Permite jugar un turno a un jugador
+     * 
+     * @param jugadorActual Jugador al que toca jugar en el turno actual
+     */
     private void turnoJugador(int jugadorActual) {
         // el jugador no tiene cartas para jugar
         if(!jugadores[jugadorActual].puedeJugar(mesa)) {
@@ -131,8 +152,10 @@ public class Juego {
         }
     }
     
-    /** 
-     * Muestra las cartas en la mesa y la mano del jugador, para el turno actual
+    /**
+     * Muestra las cartas en la mesa y la mano del jugador
+     * 
+     * @param jugadorActual Jugador al que toca jugar en el turno actual 
      */
     private void infoTurno(int jugadorActual) {
         // Mostramos info de partida
@@ -145,12 +168,12 @@ public class Juego {
         iu.mostrarMensaje("\nTurno del jugador: " 
                 + jugadores[jugadorActual].getNombre() + " (" 
                 + jugadores[jugadorActual].getPuntos() + "puntos)");
-        // TODO: mostrar puntos del jugador
         iu.mostrarJugador(jugadores[jugadorActual], jugadorActual + 1);
     }
     
     /** 
-     * Muestra el ganador de la partida
+     * Finaliza la partida, si se ha jugado el as de oros muestra los ganadores,
+     * si no, comienza una nueva partida
      */
     private void finPartida() {
         // Comenzamos nueva partida
