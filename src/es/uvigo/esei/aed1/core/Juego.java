@@ -76,6 +76,11 @@ public class Juego {
         // Creamos mesa
         mesa = new Mesa();
         
+        // Vaciamos las manos de los jugadores
+        for (Jugador j : jugadores) {
+            j.vaciarMano();
+        }
+        
         // Creamos y barajamos las cartas
         baraja = new Baraja();
         baraja.barajarCartas();
@@ -178,6 +183,7 @@ public class Juego {
     private void finPartida() {
         // Comenzamos nueva partida
         if(!asOros) {
+            // TODO: mostrar mensaje de que la partida ha terminado y esperar intro
             nuevaPartida();
         }
         // El juego ha terminado, mostramos los ganadores
@@ -191,9 +197,9 @@ public class Juego {
      */
     private void infoGanadores() {
         // TODO: mostrar ganadores
+        System.out.println("\n\n");
         iu.mostrarMensaje("Ganadores");
         for (Jugador jugadore : jugadores) {
-            System.out.println("\n\n");
             System.out.println(jugadore.getNombre() + ": " + jugadore.getPuntos());
         }
     }

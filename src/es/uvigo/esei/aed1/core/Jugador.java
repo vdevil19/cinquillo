@@ -33,6 +33,13 @@ public class Jugador {
     public ArrayList<Carta> getMano() {
         return mano;
     }
+    
+    /**
+     * Vacía la mano del jugador
+     */
+    public void vaciarMano() {
+        mano.clear();
+    }
 
     /**
      * Añade una carta a la mano del jugador
