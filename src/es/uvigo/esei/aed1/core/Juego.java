@@ -1,45 +1,64 @@
-/**
- * Representa el juego del Cinquillo-Oro, con sus reglas (definidas en el documento Primera entrega).
- * Se recomienda una implementación modular.
- */
 package es.uvigo.esei.aed1.core;
 
 import es.uvigo.esei.aed1.iu.IU;
 
+// TODO javadocs clase y métodos
+/**
+ * Representa el juego del Cinquillo-Oro, con sus reglas (definidas en el documento Primera entrega).
+ * Se recomienda una implementación modular.
+ * 
+ * @author Grupo XXXX
+ */
 public class Juego {
+    private static final int PUNTOS_PARTIDA = 4;
+    private static final int PUNTOS_AS = 2;
 
+
+    // Atributos
     private final IU iu;
     private Baraja baraja;
     private Mesa mesa;
-    private int numeroJugadores;
     private Jugador[] jugadores;
     
     private int jugadorActual;
-    private int ganador = -1;
+    private int partidas;
+    private boolean asOros;
 
+    // Constructor
     public Juego(IU iu) {
         this.iu = iu;
+        partidas = 0;
+        asOros = true;
     }
     
     public void comenzarJuego() {
         // Leemos datos de jugadores y los creamos
         iniciarJugadores();
         
+        // comenzamos una partida
+        nuevaPartida();
+    }
+
+    private void iniciarJugadores() {
+        String[] datosJugadores = iu.pedirDatosJugadores();
+        
+        jugadores = new Jugador[datosJugadores.length];
+        for (int i = 0; i < datosJugadores.length; i++) {
+            jugadores[i] = new Jugador(datosJugadores[i]);
+        }
+        
+        // TODO: sortear jugador inicial
+        jugadorActual = 0;
+    }
+    
+    public void nuevaPartida() {
+        partidas++;
+        
         // crear mesa y repartir cartas
         iniciarMesaYManos();
         
         // jugar partida
         jugar();
-    }
-
-    private void iniciarJugadores() {
-        String[] datosJugadores = iu.pedirDatosJugadores();
-        numeroJugadores = datosJugadores.length;
-        
-        jugadores = new Jugador[numeroJugadores];
-        for (int i = 0; i < numeroJugadores; i++) {
-            jugadores[i] = new Jugador(datosJugadores[i]);
-        }
     }
     
     private void iniciarMesaYManos() {
@@ -48,43 +67,41 @@ public class Juego {
         
         // Creamos y barajamos las cartas
         baraja = new Baraja();
-        baraja.barajar();
-        
+        baraja.barajarCartas();
         // Repartimos las cartas
-        jugadorActual = 0;
+        int jugador = 0;
         while(!baraja.estaVacia()) {
-            jugadores[jugadorActual].cogerCarta(baraja.siguienteCarta());
-            jugadorActual = (jugadorActual + 1) % numeroJugadores;
+            jugadores[jugador].cogerCarta(baraja.siguienteCarta());
+            jugador = (jugador + 1) % jugadores.length;
         }
     }
     
     private void jugar() {
-        // iniciamos con jugador 1
-        jugadorActual = 0;
+        // iniciamos la partida con el jugador actual
         boolean partidaTerminada = false;
         
         // bucle principal del juego
         do {
             // Mostramos mesa y mano del jugador actual
-            infoTurno();
+            infoTurno(jugadorActual);
             
             // juega el jugador actual
-            turnoJugador();
+            turnoJugador(jugadorActual);
             
             // si después de jugar no le quedan cartas, ha ganado
             if(jugadores[jugadorActual].cartasColocadas()) {
                 partidaTerminada = true;
-                ganador = jugadorActual;
+                jugadores[jugadorActual].sumarPuntos(PUNTOS_PARTIDA);
             }
             
             // pasamos el turno al siguiente jugador
-            jugadorActual = (jugadorActual + 1) % numeroJugadores;
+            jugadorActual = (jugadorActual + 1) % jugadores.length;
         } while (!partidaTerminada);
         
         finPartida();
     }
     
-    private void turnoJugador() {
+    private void turnoJugador(int jugadorActual) {
         // el jugador no tiene cartas para jugar
         if(!jugadores[jugadorActual].puedeJugar(mesa)) {
             // no puede colocar ninguna carta en la mesa, se informa y pasa el turno 
@@ -97,12 +114,17 @@ public class Juego {
                 carta = iu.pedirCarta(jugadores[jugadorActual]);
                 
                 if(mesa.esColocable(jugadores[jugadorActual].getCarta(carta - 1))) {
-                    mesa.colocarCarta(jugadores[jugadorActual].jugarCarta(carta - 1));
+                    Carta c = jugadores[jugadorActual].jugarCarta(carta - 1);
+                    mesa.colocarCarta(c);
+                    // Si hemos jugado el as de oros lo anotamos para terminar el juego
+                    if(c.getNumero() == 1 && c.getPalo() == Carta.Palo.OROS) {
+                        asOros = true;
+                        jugadores[jugadorActual].sumarPuntos(PUNTOS_AS * partidas);
+                    }
                 }
                 // Si no es posible, se le informa y se le pide que escoja otra carta. 
                 else {
                     iu.mostrarMensaje("Lo siento, no se puede jugar esa carta.");
-                    iu.mostrarJugador(jugadores[jugadorActual], jugadorActual + 1);
                     carta = -1;
                 }   
             } while(carta == -1);
@@ -112,12 +134,18 @@ public class Juego {
     /** 
      * Muestra las cartas en la mesa y la mano del jugador, para el turno actual
      */
-    private void infoTurno() {
+    private void infoTurno(int jugadorActual) {
+        // Mostramos info de partida
+        iu.mostrarMensaje("\nPartida " + partidas);
+        
         // Mostramos cartas en la mesa
-        iu.mostrarMensaje("\n" + mesa.toString());
+        iu.mostrarMensaje(mesa.toString());
 
         // Mostramos jugador actual
-        iu.mostrarMensaje("\nTurno del jugador: " + jugadores[jugadorActual].getNombre());
+        iu.mostrarMensaje("\nTurno del jugador: " 
+                + jugadores[jugadorActual].getNombre() + " (" 
+                + jugadores[jugadorActual].getPuntos() + "puntos)");
+        // TODO: mostrar puntos del jugador
         iu.mostrarJugador(jugadores[jugadorActual], jugadorActual + 1);
     }
     
@@ -125,8 +153,25 @@ public class Juego {
      * Muestra el ganador de la partida
      */
     private void finPartida() {
-        // Mostramos el nombre del ganador.
-        iu.mostrarMensaje("\n\n");
-        iu.mostrarMensaje(jugadores[ganador].getNombre() + " ha ganado la partida!\n");
+        // Comenzamos nueva partida
+        if(!asOros) {
+            nuevaPartida();
+        }
+        // El juego ha terminado, mostramos los ganadores
+        else { 
+            infoGanadores();
+        }
+    }
+    
+    /** 
+     * Muestra los ganadores del juego
+     */
+    private void infoGanadores() {
+        // TODO: mostrar ganadores
+        iu.mostrarMensaje("Ganadores");
+        for (Jugador jugadore : jugadores) {
+            System.out.println("\n\n");
+            System.out.println(jugadore.getNombre() + ": " + jugadore.getPuntos());
+        }
     }
 }

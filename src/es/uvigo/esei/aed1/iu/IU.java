@@ -1,6 +1,8 @@
 /**
  * Representa la interfaz del juego del Cinquillo-Oro, en este proyecto va a ser una entrada/salida en modo texto 
  * Se recomienda una implementación modular.
+ * 
+ * @author 
  */
 
 package es.uvigo.esei.aed1.iu;
@@ -8,6 +10,7 @@ package es.uvigo.esei.aed1.iu;
 import es.uvigo.esei.aed1.core.Jugador;
 import java.util.Scanner;
 
+// TODO javadocs clase y métodos
 public class IU {
     private final Scanner teclado;
 
