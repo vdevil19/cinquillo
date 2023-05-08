@@ -28,7 +28,7 @@ public class Juego {
     public Juego(IU iu) {
         this.iu = iu;
         partidas = 0;
-        asOros = true;
+        asOros = false;
     }
     
     public void comenzarJuego() {

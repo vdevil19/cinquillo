@@ -95,7 +95,7 @@ public class IU {
     
     public int pedirCarta(Jugador j){
         int numCarta = leerIntRango("Introduce el número de carta a jugar: ", 
-                1, j.getMano().size() + 1);
+                1, j.getTamañoMano() + 1);
         
         return numCarta;
     }

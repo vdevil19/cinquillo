@@ -32,8 +32,8 @@ public class Jugador {
         return puntos;
     }
 
-    public ArrayList<Carta> getMano() {
-        return mano;
+    public int getTamañoMano() {
+        return mano.size();
     }
 
     public void cogerCarta(Carta c) {
