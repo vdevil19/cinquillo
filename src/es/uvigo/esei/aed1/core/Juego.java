@@ -1,6 +1,9 @@
 package es.uvigo.esei.aed1.core;
 
 import es.uvigo.esei.aed1.iu.IU;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Representa el juego del Cinquillo-Oro, con sus reglas (definidas en el documento Primera entrega).
@@ -52,8 +55,8 @@ public class Juego {
             jugadores[i] = new Jugador(datosJugadores[i]);
         }
         
-        // TODO: sortear jugador inicial
-        jugadorActual = 0;
+        // sorteamos jugador que comienza la partida
+        jugadorActual = (new Random()).nextInt(jugadores.length);
     }
     
     /**
@@ -100,6 +103,7 @@ public class Juego {
     private void jugar() {
         // iniciamos la partida con el jugador actual
         boolean partidaTerminada = false;
+        int ganador = 0;
         
         // bucle principal del juego
         do {
@@ -113,13 +117,14 @@ public class Juego {
             if(jugadores[jugadorActual].cartasColocadas()) {
                 partidaTerminada = true;
                 jugadores[jugadorActual].sumarPuntos(PUNTOS_PARTIDA);
+                ganador = jugadorActual;
             }
             
             // pasamos el turno al siguiente jugador
             jugadorActual = (jugadorActual + 1) % jugadores.length;
         } while (!partidaTerminada);
         
-        finPartida();
+        finPartida(ganador);
     }
     
     /**
@@ -172,7 +177,7 @@ public class Juego {
         // Mostramos jugador actual
         iu.mostrarMensaje("\nTurno del jugador: " 
                 + jugadores[jugadorActual].getNombre() + " (" 
-                + jugadores[jugadorActual].getPuntos() + "puntos)");
+                + jugadores[jugadorActual].getPuntos() + " puntos)");
         iu.mostrarJugador(jugadores[jugadorActual], jugadorActual + 1);
     }
     
@@ -180,10 +185,13 @@ public class Juego {
      * Finaliza la partida, si se ha jugado el as de oros muestra los ganadores,
      * si no, comienza una nueva partida
      */
-    private void finPartida() {
+    private void finPartida(int ganador) {
         // Comenzamos nueva partida
         if(!asOros) {
-            // TODO: mostrar mensaje de que la partida ha terminado y esperar intro
+            iu.mostrarMensaje("\n\n" +"-".repeat(50));
+            iu.mostrarMensaje(jugadores[ganador].getNombre()
+                    + " ha ganado la partida.");
+            iu.leeString("Pulsa intro para continuar.");
             nuevaPartida();
         }
         // El juego ha terminado, mostramos los ganadores
@@ -196,11 +204,23 @@ public class Juego {
      * Muestra los ganadores del juego
      */
     private void infoGanadores() {
-        // TODO: mostrar ganadores
+        // comprobamos ganadores
+        List<String> ganadores = new ArrayList();
+        int puntuacionMaxima = 0;
+        for (Jugador j : jugadores) {
+            if(j.getPuntos() >= puntuacionMaxima) {
+                if(j.getPuntos() > puntuacionMaxima) {
+                    puntuacionMaxima = j.getPuntos();
+                    ganadores.clear();
+                }
+                ganadores.add(j.getNombre() + ": " + puntuacionMaxima + " puntos");
+            }
+        }
+        
         System.out.println("\n\n");
-        iu.mostrarMensaje("Ganadores");
-        for (Jugador jugadore : jugadores) {
-            System.out.println(jugadore.getNombre() + ": " + jugadore.getPuntos());
+        iu.mostrarMensaje("Ganadores\n---------");
+        for (String g : ganadores) {
+            iu.mostrarMensaje(g);
         }
     }
 }
