@@ -1,11 +1,10 @@
-// TODO javadocs clase y métodos
 /**
 * Representa la Mesa de juego. 
 * Estructura: se utilizará un TAD adecuado. Piensa que hay 4 palos y de cada palo se pueden colocar cartas 
 * por cualquiera de los dos extremos (un array con 4 doblescolas parece lo más adecuado). La DobleCola se comentó en clase de teoría
 * Funcionalidad: saber si es posible colocar una carta en la mesa, colocar una carta en la mesa, mostrar la mesa
 * 
-* @author Grupo XXXXX
+* @author Grupo 2Espadas
  */
 package es.uvigo.esei.aed1.core;
 
@@ -24,12 +23,21 @@ public class Mesa {
         vaciarMesa();
     }
     
+    /**
+     * Vacía las cartas de la mesa
+     */
     public void vaciarMesa() {
         for (int i = 0; i < mesa.length; i++) {
             mesa[i] = new ArrayDeque<>();
         }
     }
     
+    /**
+     * Comprueba si una carta se puede jugar en la mesa
+     * 
+     * @param c Carta que se quiere jugar
+     * @return Cierto si la carta puede ser jugada y falso si no
+     */
     public boolean esColocable(Carta c) {
         // los cincos se colocan siempre
         if(c.getNumero() == 5) {
@@ -43,6 +51,11 @@ public class Mesa {
         }
     }
     
+    /**
+     * Juega una carta en la mesa
+     * 
+     * @param c Carta que se quiere jugar
+     */
     public void colocarCarta(Carta c) {
         if(esColocable(c)) {
             //colocamos la mesa en la mano de su palo correspondiente
@@ -65,9 +78,6 @@ public class Mesa {
         }
     }
     
-    
-
-    //a�adir m�s funcionalidades
     // mostrar el estado de la mesa
     @Override
     public String toString() {
